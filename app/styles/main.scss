@@ -97,6 +97,10 @@ $paint-height: 1000px;
   vertical-align: middle;
   .pagination{
     display: inline;
+    a{
+      min-width: 42px;
+      text-align: center;
+    }
   }
 
 }
