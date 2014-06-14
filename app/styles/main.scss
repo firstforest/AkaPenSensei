@@ -27,19 +27,32 @@ body {
   padding-bottom: 19px;
 }
 
+$paint-height: 1000px;
 #main {
   margin-left: auto;
   margin-right: auto;
   #paint {
-    img {
-      border: 1px solid lightgray;
-      margin: 0 auto;
-    }
+    position: relative;
     width: 650+100px;
-    padding: 30px 50px;
+    height: $paint-height;
+    line-height: $paint-height;
     float: left;
     border: 1px solid black;
     margin-bottom: 30px;
+    img {
+      position: absolute;
+      border: 1px solid lightgray;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    canvas {
+      position: absolute;
+    }
   }
   #ui {
     background: rgba(180, 180, 230, 0.4);
@@ -59,13 +72,13 @@ body {
       border-bottom: 1px solid rgba(180, 180, 230, 0.8);
       font-size: 1em;
     }
-    img{
+    img {
       width: 48px;
       height: 48px;
       margin-right: 5px;
     }
-    input{
-      float:right;
+    input {
+      float: right;
       margin: auto 5px;
       height: 48px
     }
