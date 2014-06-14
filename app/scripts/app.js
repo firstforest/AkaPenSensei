@@ -4,7 +4,8 @@ angular.module('akaPenSenseiApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'ui.bootstrap'
 ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -13,7 +14,8 @@ angular.module('akaPenSenseiApp', [
                 controller: 'MainCtrl'
             })
             .when('/page', {
-                templateUrl: 'views/page.html'
+                templateUrl: 'views/page.html',
+                controller: 'PageCtrl'
             })
             .otherwise({
                 redirectTo: '/'

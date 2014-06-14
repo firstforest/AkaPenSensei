@@ -8,9 +8,16 @@
 </div>
 
 <div id="main">
+    <div id="page-controller">
+        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" items-per-page="1"
+                    max-size="16"
+                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                    ng-change="pageChanged()"></pagination>
+        <input type="number" ng-model="currentPage">
+    </div>
     <div id="paint">
         <img src="../images/sample.jpg">
-        <canvas drawing width="750px" height="960px"></canvas>
+        <canvas drawing width="750px" height="1000px"></canvas>
     </div>
     <div id="ui">
         <ul>
