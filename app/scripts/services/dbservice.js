@@ -70,7 +70,7 @@ angular.module('akaPenSenseiApp')
             for (var i = 0; i < resultSet.length; i++) {
               notifyContent(resultSet[i], d);
             }
-            if (nextQuery !== null) {
+            if (nextQuery != null) {
               // There are more results (pages).
               // Execute the next query to get more results.
               bucket.executeQuery(nextQuery, queryCallbacks);
