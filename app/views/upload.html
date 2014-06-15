@@ -1,0 +1,7 @@
+<input type="text" placeholder="タイトル" ng-model="title"/>
+<label>
+    <textarea ng-model="description"></textarea>
+</label>
+<input type="file" ng-file-select="onFileSelect($files)">
+<button ng-click="upload()">画像をアップロード</button>
+<img ng-src="{{uploadedImageUrl}}">

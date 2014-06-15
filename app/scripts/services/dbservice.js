@@ -3,6 +3,7 @@
 angular.module('akaPenSenseiApp')
   .service('DbService', function DbService($q) {
     var that = this;
+    Kii.initializeWithSite('966eb9b6', 'e0e4c26eb09772eb1f591f063162b3dd', KiiSite.JP);
 
     function getCurrentUser() {
       var d = $q.defer();
@@ -35,17 +36,46 @@ angular.module('akaPenSenseiApp')
       return d.promise;
     }
 
-    this.upload = function (file, title, description) {
-      var obj = getImageBucket().createObject();
-      obj.set('title', 'title');
-      obj.set('description', '説明');
-      obj.save({
-        success: function (theObject) {
-          console.log("Object saved & bucket created!");
-        },
-        failure: function (theObject, errorString) {
-          console.log("Error saving object and bucket: " + errorString);
-        }
+    this.upload = function (file, title, description, callback) {
+      getImageBucket().then(function (bucket) {
+        var obj = bucket.createObject();
+        obj.set('title', title);
+        obj.set('description', description);
+        obj.save({
+            success: function (theObject) {
+              console.log('Object saved & bucket created!', theObject);
+              theObject.uploadBody(file, {
+                progress: function (oEvent) {
+                  if (oEvent.lengthComputable) {
+                    var percentComplete = oEvent.loaded / oEvent.total;
+                    //getting upload progress. You can update progress bar on this function.
+                    console.log("upload percentComplete: " + percentComplete);
+                  }
+                },
+                success: function (obj) {
+                  obj.publishBody({
+                    success: function (obj, publishedUrl) {
+                      callback(publishedUrl);
+                      console.log(publishedUrl);
+                    },
+                    failure: function (obj, errorString) {
+                      console.log('publish failed.', errorString);
+                    }
+                  })
+                },
+                failure: function (obj, anErrorString) {
+                  console.log(anErrorString);
+                }
+              });
+            },
+            failure: function (theObject, errorString) {
+              console.log('Error saving object and bucket: ' + errorString);
+            }
+          }
+        )
+        ;
       });
-    };
-  });
+    }
+    ;
+  })
+;

@@ -5,7 +5,8 @@ angular.module('akaPenSenseiApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'angularFileUpload'
 ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -16,6 +17,10 @@ angular.module('akaPenSenseiApp', [
       .when('/page', {
         templateUrl: 'views/page.html',
         controller: 'PageCtrl'
+      })
+      .when('/upload', {
+        templateUrl: 'views/upload.html',
+        controller: 'UploadCtrl'
       })
       .otherwise({
         redirectTo: '/'
