@@ -9,7 +9,7 @@
 
 <ul class="gallery">
     <li ng-repeat="image in images">
-        <a href="#/page">
+        <a href="#/page" ng-click="setImage(image)">
             <img ng-src="{{image}}"/>
         </a>
     </li>

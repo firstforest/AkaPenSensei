@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('akaPenSenseiApp')
-  .controller('PageCtrl', function ($scope) {
+  .controller('PageCtrl', function ($scope, TargetContent) {
     $scope.totalItems = 64;
     $scope.currentPage = 1;
     $scope.pageChanged = function () {
       console.log($scope.totalItems, $scope.currentPage);
     };
+    $scope.src = TargetContent.src;
   });
