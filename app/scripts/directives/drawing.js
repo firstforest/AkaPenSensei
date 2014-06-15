@@ -12,8 +12,9 @@ angular.module('akaPenSenseiApp')
         var lastX;
         var lastY;
         element.bind('mousedown', function (event) {
-          lastX = event.offsetX;
-          lastY = event.offsetY;
+          lastX = event.offsetX | event.originalEvent.layerX;
+          lastY = event.offsetY | event.originalEvent.layerY;
+          console.log(event, lastX);
           // begins new line
           ctx.beginPath();
           drawing = true;
@@ -23,8 +24,8 @@ angular.module('akaPenSenseiApp')
         element.bind('mousemove', function (event) {
           if (drawing) {
             // get current mouse position
-            currentX = event.offsetX;
-            currentY = event.offsetY;
+            currentX = event.offsetX | event.originalEvent.layerX;
+            currentY = event.offsetY | event.originalEvent.layerY;
 
             draw(lastX, lastY, currentX, currentY);
 
