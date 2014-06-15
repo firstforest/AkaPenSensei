@@ -76,24 +76,33 @@ angular.module('akaPenSenseiApp')
       return d.promise;
     };
 
+    function notifyContent(obj, d){
+      var contentId = obj.objectURI();
+      obj.publishBody({
+          success: function (obj, publishedUrl) {
+            var content = {
+              src: publishedUrl,
+              id: contentId
+            };
+            console.log('URL = ', publishedUrl);
+            console.log('title = ', contentId);
+            d.notify(content);
+          },
+          failure: function (obj, errorString) {
+            console.log('publish failed.', errorString);
+          }
+        }
+      )
+
+    }
+
     this.getAllContentList = function () {
       var d = $q.defer();
       getImageBucket().then(function (bucket) {
         var queryCallbacks = {
           success: function (queryPerformed, resultSet, nextQuery) {
             for (var i = 0; i < resultSet.length; i++) {
-              resultSet[i].publishBody({
-                success: function (obj, publishedUrl) {
-                  var content = {
-                    src: publishedUrl,
-                    id: obj.objectURI()
-                  };
-                  d.notify(content);
-                },
-                failure: function (obj, errorString) {
-                  console.log('publish failed.', errorString);
-                }
-              })
+              notifyContent(resultSet[i], d);
             }
             if (nextQuery != null) {
               // There are more results (pages).
@@ -106,9 +115,11 @@ angular.module('akaPenSenseiApp')
           }
         };
         bucket.executeQuery(null, queryCallbacks);
-      });
+      })
+      ;
       return d.promise;
-    };
+    }
+    ;
 
     this.upload = function (file, title, description, callback) {
       getImageBucket().then(function (bucket) {
@@ -200,7 +211,7 @@ angular.module('akaPenSenseiApp')
         var queryCallbacks = {
           success: function (queryPerformed, resultSet, nextQuery) {
             for (var i = 0; i < resultSet.length; i++) {
-              console.log('akapenData get.', resultSet[i]);
+              console.log('akapenData get.', resultSet[i], resultSet[i].get('contentId'));
               var akapenData = {
                 contentId: contentId,
                 akapen: resultSet[i].get('akapen'),
@@ -220,4 +231,5 @@ angular.module('akaPenSenseiApp')
       return d.promise;
     };
 
-  });
+  })
+;

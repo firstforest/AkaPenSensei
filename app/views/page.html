@@ -39,27 +39,9 @@
         </ul>
         <textarea placeholder="コメントを入力してね" ng-model="comment"></textarea>
         <ul>
-            <li><h4><img src="../images/yeoman.png">yeoman</h4>
+            <li ng-repeat="akapen in akapenList"><h4><img src="../images/yeoman.png">yeoman</h4>
 
-                <p>この漫画は最高だ！</p></li>
-            <li><h4><img src="../images/yeoman.png">yeoman</h4>
-
-                <p>この漫画は最高だ！</p></li>
-            <li><h4><img src="../images/yeoman.png">yeoman</h4>
-
-                <p>この漫画は最高だ！</p></li>
-            <li><h4><img src="../images/yeoman.png">yeoman</h4>
-
-                <p>この漫画は最高だ！</p></li>
-            <li><h4><img src="../images/yeoman.png">yeoman</h4>
-
-                <p>この漫画は最高だ！</p></li>
-            <li><h4><img src="../images/yeoman.png">yeoman</h4>
-
-                <p>この漫画は最高だ！</p></li>
-            <li><h4><img src="../images/yeoman.png">yeoman</h4>
-
-                <p>この漫画は最高だ！</p></li>
+                <p>{{akapen.comment}}</p></li>
 
         </ul>
     </div>
