@@ -1,3 +1,11 @@
+<div class="header">
+    <ul class="nav nav-pills pull-right">
+        <li><a ng-href="#">Home</a></li>
+        <li class="active"><a ng-href="#">Upload</a></li>
+    </ul>
+    <h3 class="text-muted">AkaPenSensei</h3>
+</div>
+
 <input type="text" placeholder="タイトル" ng-model="title"/>
 <label>
     <textarea ng-model="description"></textarea>
@@ -5,3 +13,7 @@
 <input type="file" ng-file-select="onFileSelect($files)">
 <button ng-click="upload()">画像をアップロード</button>
 <img ng-src="{{uploadedImageUrl}}">
+
+<div class="footer">
+    <p>@firstforest</p>
+</div>
