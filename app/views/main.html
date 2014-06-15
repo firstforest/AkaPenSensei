@@ -8,9 +8,9 @@
 </div>
 
 <ul class="gallery">
-    <li ng-repeat="image in images">
-        <a href="#/page" ng-click="setImage(image)">
-            <img ng-src="{{image}}"/>
+    <li ng-repeat="content in contents">
+        <a href="#/page" ng-click="setContent(content)">
+            <img ng-src="{{content.src}}"/>
         </a>
     </li>
 </ul>

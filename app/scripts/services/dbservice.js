@@ -68,6 +68,40 @@ angular.module('akaPenSenseiApp')
       return d.promise;
     };
 
+    this.getAllContentList = function () {
+      var d = $q.defer();
+      getImageBucket().then(function (bucket) {
+        var queryCallbacks = {
+          success: function (queryPerformed, resultSet, nextQuery) {
+            for (var i = 0; i < resultSet.length; i++) {
+              resultSet[i].publishBody({
+                success: function (obj, publishedUrl) {
+                  var content = {
+                    src: publishedUrl,
+                    id: obj.objectURI()
+                  };
+                  d.notify(content);
+                },
+                failure: function (obj, errorString) {
+                  console.log('publish failed.', errorString);
+                }
+              })
+            }
+            if (nextQuery != null) {
+              // There are more results (pages).
+              // Execute the next query to get more results.
+              bucket.executeQuery(nextQuery, queryCallbacks);
+            }
+          },
+          failure: function (queryPerformed, anErrorString) {
+            console.log('error query', queryPerformed, anErrorString);
+          }
+        };
+        bucket.executeQuery(null, queryCallbacks);
+      });
+      return d.promise;
+    };
+
     this.upload = function (file, title, description, callback) {
       getImageBucket().then(function (bucket) {
         var obj = bucket.createObject();
