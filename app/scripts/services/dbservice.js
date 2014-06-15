@@ -36,44 +36,74 @@ angular.module('akaPenSenseiApp')
       return d.promise;
     }
 
+    this.getAllImageSrcList = function () {
+      var d = $q.defer();
+      var list = [];
+      getImageBucket().then(function (bucket) {
+        var queryCallbacks = {
+          success: function (queryPerformed, resultSet, nextQuery) {
+            for (var i = 0; i < resultSet.length; i++) {
+              resultSet[i].publishBody({
+                success: function (obj, publishedUrl) {
+                  d.notify(publishedUrl)
+                  list.push(publishedUrl);
+                },
+                failure: function (obj, errorString) {
+                  console.log('publish failed.', errorString);
+                }
+              })
+            }
+            if (nextQuery != null) {
+              // There are more results (pages).
+              // Execute the next query to get more results.
+              bucket.executeQuery(nextQuery, queryCallbacks);
+            }
+          },
+          failure: function (queryPerformed, anErrorString) {
+            console.log('error query', queryPerformed, anErrorString);
+          }
+        };
+        bucket.executeQuery(null, queryCallbacks);
+      });
+      return d.promise;
+    };
+
     this.upload = function (file, title, description, callback) {
       getImageBucket().then(function (bucket) {
         var obj = bucket.createObject();
         obj.set('title', title);
         obj.set('description', description);
         obj.save({
-            success: function (theObject) {
-              console.log('Object saved & bucket created!', theObject);
-              theObject.uploadBody(file, {
-                progress: function (oEvent) {
-                  if (oEvent.lengthComputable) {
-                    var percentComplete = oEvent.loaded / oEvent.total;
-                    //getting upload progress. You can update progress bar on this function.
-                    console.log("upload percentComplete: " + percentComplete);
-                  }
-                },
-                success: function (obj) {
-                  obj.publishBody({
-                    success: function (obj, publishedUrl) {
-                      callback(publishedUrl);
-                      console.log(publishedUrl);
-                    },
-                    failure: function (obj, errorString) {
-                      console.log('publish failed.', errorString);
-                    }
-                  })
-                },
-                failure: function (obj, anErrorString) {
-                  console.log(anErrorString);
+          success: function (theObject) {
+            console.log('Object saved & bucket created!', theObject);
+            theObject.uploadBody(file, {
+              progress: function (oEvent) {
+                if (oEvent.lengthComputable) {
+                  var percentComplete = oEvent.loaded / oEvent.total;
+                  //getting upload progress. You can update progress bar on this function.
+                  console.log("upload percentComplete: " + percentComplete);
                 }
-              });
-            },
-            failure: function (theObject, errorString) {
-              console.log('Error saving object and bucket: ' + errorString);
-            }
+              },
+              success: function (obj) {
+                obj.publishBody({
+                  success: function (obj, publishedUrl) {
+                    callback(publishedUrl);
+                    console.log(publishedUrl);
+                  },
+                  failure: function (obj, errorString) {
+                    console.log('publish failed.', errorString);
+                  }
+                })
+              },
+              failure: function (obj, anErrorString) {
+                console.log(anErrorString);
+              }
+            });
+          },
+          failure: function (theObject, errorString) {
+            console.log('Error saving object and bucket: ' + errorString);
           }
-        )
-        ;
+        });
       });
     }
     ;

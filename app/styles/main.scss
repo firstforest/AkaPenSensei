@@ -27,6 +27,14 @@ body {
   padding-bottom: 19px;
 }
 
+.gallery {
+  list-style: none;
+  img {
+    max-width: 256px;
+    max-height: 256px;
+  }
+}
+
 $paint-height: 1000px;
 #main {
   margin-left: auto;
@@ -95,9 +103,9 @@ $paint-height: 1000px;
   width: 100%;
   height: 40px;
   vertical-align: middle;
-  .pagination{
+  .pagination {
     display: inline;
-    a{
+    a {
       min-width: 42px;
       text-align: center;
     }
