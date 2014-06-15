@@ -36,6 +36,14 @@ angular.module('akaPenSenseiApp')
       return d.promise;
     }
 
+    function getAkapenBucket() {
+      var d = $q.defer();
+      getCurrentUser().then(function (user) {
+        d.resolve(user.bucketWithName('akapen'));
+      });
+      return d.promise;
+    }
+
     this.getAllImageSrcList = function () {
       var d = $q.defer();
       var list = [];
@@ -139,7 +147,21 @@ angular.module('akaPenSenseiApp')
           }
         });
       });
+    };
+    this.saveAkapenData = function (data) {
+      getAkapenBucket().then(function (bucket) {
+        var obj = bucket.createObject();
+        obj.set('contentId', data.contentId);
+        obj.set('comment', data.comment);
+        obj.set('akapen', data.akapen);
+        obj.save({
+          success: function (obj) {
+            console.log(obj);
+          },
+          failure: function () {
+
+          }
+        })
+      });
     }
-    ;
-  })
-;
+  });

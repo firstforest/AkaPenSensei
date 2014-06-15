@@ -15,6 +15,7 @@
                     ng-change="pageChanged()"></pagination>
         <input type="number" ng-model="currentPage">
         <button ng-click="reset()">全消し</button>
+        <button ng-click="save()">保存</button>
     </div>
     <div id="paint">
         <img ng-src="{{src}}">
@@ -35,7 +36,7 @@
             <li><img src="images/yeoman.png">yeoman<input type="checkbox"></li>
 
         </ul>
-        <textarea placeholder="コメントを入力してね"></textarea>
+        <textarea placeholder="コメントを入力してね" ng-model="comment"></textarea>
         <ul>
             <li><h4><img src="../images/yeoman.png">yeoman</h4>
 
