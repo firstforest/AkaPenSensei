@@ -15,11 +15,7 @@ describe('Service: DbService', function () {
     expect(!!DbService).to.be.true;
   });
 
-  describe('初期化処理', function(){
-    expect(DbService.user).to.not.be.null;
-  });
-
-  describe('upload', function(){
+  describe('upload', function () {
 //    it('KiiCloudにファイルを上げる')
   });
 
