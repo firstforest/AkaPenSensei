@@ -7,21 +7,21 @@ describe('Controller: UploadCtrl', function () {
 
   var UploadCtrl,
     scope,
-    mockDb;
+    mockDbService;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    mockDb = {
+    mockDbService = {
       upload: function (file, title, description) {
-        mockDb.file = file;
-        mockDb.title = title;
-        mockDb.description = description;
+        mockDbService.file = file;
+        mockDbService.title = title;
+        mockDbService.description = description;
       }
     };
     UploadCtrl = $controller('UploadCtrl', {
       $scope: scope,
-      Db: mockDb
+      DbService: mockDbService
     });
   }));
 
@@ -38,9 +38,9 @@ describe('Controller: UploadCtrl', function () {
       var file = new Blob(['Hello Blob', {type: 'text/plain'}]);
       scope.targetFile = file;
       scope.upload();
-      expect(mockDb.title).to.be.eql(scope.title);
-      expect(mockDb.description).to.be.eql(scope.description);
-      expect(mockDb.file).to.be.eql(scope.targetFile);
+      expect(mockDbService.title).to.be.eql(scope.title);
+      expect(mockDbService.description).to.be.eql(scope.description);
+      expect(mockDbService.file).to.be.eql(scope.targetFile);
     });
   });
 });
