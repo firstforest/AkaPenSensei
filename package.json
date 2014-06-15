@@ -2,6 +2,11 @@
   "name": "akapensensei",
   "version": "0.0.0",
   "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:firstforest/AkaPenSensei.git"
+  },
+  "description": "赤ペンしたりされたりするサイト",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",

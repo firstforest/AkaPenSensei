@@ -44,56 +44,22 @@ angular.module('akaPenSenseiApp')
       return d.promise;
     }
 
-    this.getAllImageSrcList = function () {
-      var d = $q.defer();
-      var list = [];
-      getImageBucket().then(function (bucket) {
-        var queryCallbacks = {
-          success: function (queryPerformed, resultSet, nextQuery) {
-            for (var i = 0; i < resultSet.length; i++) {
-              resultSet[i].publishBody({
-                success: function (obj, publishedUrl) {
-                  d.notify(publishedUrl)
-                  list.push(publishedUrl);
-                },
-                failure: function (obj, errorString) {
-                  console.log('publish failed.', errorString);
-                }
-              })
-            }
-            if (nextQuery != null) {
-              // There are more results (pages).
-              // Execute the next query to get more results.
-              bucket.executeQuery(nextQuery, queryCallbacks);
-            }
-          },
-          failure: function (queryPerformed, anErrorString) {
-            console.log('error query', queryPerformed, anErrorString);
-          }
-        };
-        bucket.executeQuery(null, queryCallbacks);
-      });
-      return d.promise;
-    };
-
-    function notifyContent(obj, d){
+    function notifyContent(obj, d) {
       var contentId = obj.objectURI();
       obj.publishBody({
-          success: function (obj, publishedUrl) {
-            var content = {
-              src: publishedUrl,
-              id: contentId
-            };
-            console.log('URL = ', publishedUrl);
-            console.log('title = ', contentId);
-            d.notify(content);
-          },
-          failure: function (obj, errorString) {
-            console.log('publish failed.', errorString);
-          }
+        success: function (obj, publishedUrl) {
+          var content = {
+            src: publishedUrl,
+            id: contentId
+          };
+          console.log('URL = ', publishedUrl);
+          console.log('title = ', contentId);
+          d.notify(content);
+        },
+        failure: function (obj, errorString) {
+          console.log('publish failed.', errorString);
         }
-      )
-
+      });
     }
 
     this.getAllContentList = function () {
@@ -104,7 +70,7 @@ angular.module('akaPenSenseiApp')
             for (var i = 0; i < resultSet.length; i++) {
               notifyContent(resultSet[i], d);
             }
-            if (nextQuery != null) {
+            if (nextQuery !== null) {
               // There are more results (pages).
               // Execute the next query to get more results.
               bucket.executeQuery(nextQuery, queryCallbacks);

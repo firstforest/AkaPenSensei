@@ -11,5 +11,5 @@ angular.module('akaPenSenseiApp')
     $scope.setContent = function (content) {
       TargetContent.src = content.src;
       TargetContent.id = content.id;
-    }
+    };
   });
