@@ -21,4 +21,9 @@ angular.module('akaPenSenseiApp')
       console.log(akapenData);
       DbService.saveAkapenData(akapenData);
     };
+    $scope.akapenList = [];
+    DbService.getAkapenDataList(TargetContent.id).then(null,null,function(akapenData){
+      $scope.akapenList.push(akapenData);
+    });
+
   });

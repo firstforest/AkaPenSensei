@@ -163,5 +163,61 @@ angular.module('akaPenSenseiApp')
           }
         })
       });
-    }
+    };
+    this.getAkapenData = function (contentId) {
+      var d = $q.defer();
+      getAkapenBucket().then(function (bucket) {
+        var clause = KiiClause.equals("contentId", contentId);
+        var query = KiiQuery.queryWithClause(clause);
+        var queryCallbacks = {
+          success: function (queryPerformed, resultSet, nextQuery) {
+            for (var i = 0; i < resultSet.length; i++) {
+              console.log('akapenData get.', resultSet[i]);
+              var akapenData = {
+                contentId: contentId,
+                akapen: resultSet[i].get('akapen'),
+                comment: resultSet[i].get('comment')
+              };
+              d.resolve(akapenData);
+            }
+            if (nextQuery != null) {
+              bucket.executeQuery(nextQuery, queryCallbacks);
+            }
+          },
+          failure: function (queryPerformed, anErrorString) {
+          }
+        };
+        bucket.executeQuery(query, queryCallbacks);
+      });
+      return d.promise;
+    };
+
+    this.getAkapenDataList = function (contentId) {
+      var d = $q.defer();
+      getAkapenBucket().then(function (bucket) {
+        var clause = KiiClause.equals("contentId", contentId);
+        var query = KiiQuery.queryWithClause(clause);
+        var queryCallbacks = {
+          success: function (queryPerformed, resultSet, nextQuery) {
+            for (var i = 0; i < resultSet.length; i++) {
+              console.log('akapenData get.', resultSet[i]);
+              var akapenData = {
+                contentId: contentId,
+                akapen: resultSet[i].get('akapen'),
+                comment: resultSet[i].get('comment')
+              };
+              d.notify(akapenData);
+            }
+            if (nextQuery != null) {
+              bucket.executeQuery(nextQuery, queryCallbacks);
+            }
+          },
+          failure: function (queryPerformed, anErrorString) {
+          }
+        };
+        bucket.executeQuery(query, queryCallbacks);
+      });
+      return d.promise;
+    };
+
   });

@@ -18,7 +18,8 @@
         <button ng-click="save()">保存</button>
     </div>
     <div id="paint">
-        <img ng-src="{{src}}">
+        <img ng-src="{{src}}"/>
+        <img ng-repeat="akapen in akapenList" ng-src="{{akapen.akapen}}"/>
         <canvas drawing width="750px" height="1000px"></canvas>
     </div>
     <div id="ui">
